@@ -1,0 +1,78 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteClient`(IN client_id integer)
+BEGIN
+     DELETE FROM `login_sp`.`client`
+   WHERE id=client_id;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getAllClientsById`(IN cid integer(11),out cname varchar(255), out addr varchar(255), out pnumber varchar(255), out ccid integer(11))
+BEGIN
+    SELECT
+   clientname,address,phoneno,id
+   into cname,addr,pnumber,ccid
+
+    FROM `client`
+   WHERE id=cid LIMIT 1;
+
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getUserByUsername`(IN user_name varchar(255),out uname varchar(255), out pass varchar(255))
+BEGIN
+    SELECT
+   username,password
+   into uname,pass
+
+    FROM `login`
+   WHERE username=user_name LIMIT 1;
+
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `saveClient`(IN clientname varchar(255), IN address varchar(255), IN phoneno varchar(255))
+BEGIN
+    INSERT INTO `login_sp`.`client`
+   (
+        clientname,
+       address,
+       phoneno
+       )
+   VALUES
+   (
+   clientname,
+   address,
+   phoneno
+   );
+
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `saveUser`(IN username varchar(255), IN password varchar(255))
+BEGIN
+    INSERT INTO `login_sp`.`login`
+   (
+        username,
+       password
+       )
+   VALUES
+   (
+   username,
+   password
+   );
+
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateclient`(
+IN client_id integer(11),
+IN clientname varchar(255), 
+IN address varchar(255), 
+IN phoneno varchar(255))
+BEGIN
+    UPDATE `login_sp`.`client`
+   SET clientname=clientname,
+        address=address,
+       phoneno=phoneno      
+    WHERE id=client_id;
+    
+END
